@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include <AccelStepper.h>
-#include <Sensor-Bibo.h>
+#include <Sensor-Bibo.h> //steering_value
+#include <Motor-Bibo.h> //setMotor
 
 //-----Hauptprogramm-----//
 
@@ -10,25 +11,6 @@ AccelStepper VL(1, 26, 27);
 AccelStepper VR(1, 28, 29); 
 
 int Gang;
-int counter;
-
-void setMotor(int pin, int v) // set up Motor 
-{
-  pinMode(pin, OUTPUT);     // SET PIN
-  pinMode(pin + 1, OUTPUT);
-  pinMode(pin + 2, OUTPUT); 
-
-  digitalWrite(pin, v & 1 ? HIGH : LOW);     // WRITE PIN
-  digitalWrite(pin + 1, v & 2 ? HIGH : LOW); 
-  digitalWrite(pin + 2, v & 4 ? HIGH : LOW); 
-
-  HL.setMaxSpeed(3000); // set Maxpeed
-  HR.setMaxSpeed(3000); 
-  VL.setMaxSpeed(3000); 
-  VR.setMaxSpeed(3000); 
-
-}
-
 
 void setup() {
   Serial.begin(9600);
@@ -37,6 +19,7 @@ void setup() {
   setMotor(33, Gang); 
   setMotor(36, Gang); 
   setMotor(39, Gang); 
+
 }
 
 void loop() {
